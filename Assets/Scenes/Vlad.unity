@@ -2010,7 +2010,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sanity: 100
+  amplitude: 1
   sanityText: {fileID: 390767619}
+  ppProfile: {fileID: 0}
 --- !u!1 &1755516617
 GameObject:
   m_ObjectHideFlags: 0
