@@ -26,6 +26,8 @@ public class Interactible : MonoBehaviour
                 break;
             case ItemType.Button:
                 //gaseste usa cu numele butonului si deschide
+                GameObject.Find(gameObject.name + "door").transform.rotation = Quaternion.EulerAngles(0, 0, -90); ; 
+
                 break;
             case ItemType.Potion:
                 //creste sanitatea
