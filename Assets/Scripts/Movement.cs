@@ -27,7 +27,6 @@ public class Movement : MonoBehaviour
     {
         Vector2 moveAxis = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         moveAxis.Normalize();
-        print(MathF.Abs(moveAxis.x) + " " + MathF.Abs(moveAxis.y));
         if (moveAxis == Vector2.zero)
         {
             animator.SetBool("Return", true);
