@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private int moveSpeed;
     [SerializeField] private bool canInteract;
     [SerializeField] private Interactible interactibleScript = null;
+    [SerializeField] private BoxCollider2D interactCollider = null;
 
     // Start is called before the first frame update
     void Start()
@@ -80,8 +81,14 @@ public class Movement : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
+        //BoxCollider2D[] col = other.gameObject.GetComponents<BoxCollider2D>();
         if (other.CompareTag("Interactible"))
         {
+            /*foreach(var ind in col)
+            {
+                if (ind.isTrigger == true)
+                    Debug.Log("vede butonu");///Destroy(ind.gameObject);
+            }*/
             CanvasAnims.instance.AnimateInteract();
             interactibleScript = other.GetComponent<Interactible>();
             canInteract = true;
@@ -91,6 +98,7 @@ public class Movement : MonoBehaviour
                 CanvasAnims.instance.SetInteractText(interactibleScript.GetRestriction());
             }
         }
+
     }
 
     public void OnTriggerExit2D(Collider2D other)
