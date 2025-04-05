@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private int moveSpeed;
+    [SerializeField] private bool canInteract;
     [SerializeField] private Interactible interactibleScript = null;
 
     // Start is called before the first frame update
@@ -22,6 +23,14 @@ public class Movement : MonoBehaviour
     {
         Move();
         
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && canInteract && interactibleScript != null)
+        {
+            interactibleScript.Interact();
+        }
     }
 
     public void Move()
@@ -75,8 +84,10 @@ public class Movement : MonoBehaviour
         {
             CanvasAnims.instance.AnimateInteract();
             interactibleScript = other.GetComponent<Interactible>();
+            canInteract = true;
             if (!interactibleScript.CanInteract())
             {
+                canInteract = false;
                 CanvasAnims.instance.SetInteractText(interactibleScript.GetRestriction());
             }
         }
@@ -86,6 +97,8 @@ public class Movement : MonoBehaviour
     {
         if (other.CompareTag("Interactible"))
         {
+            canInteract = false;
+            interactibleScript = null;
             CanvasAnims.instance.AnimateEndInteract();
         }
     }

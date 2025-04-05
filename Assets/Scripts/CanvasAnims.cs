@@ -35,6 +35,10 @@ public class CanvasAnims : MonoBehaviour
 
     public void ResetToOriginBottom()
     {
+        if (panel == null || interactText.gameObject == null)
+        {
+            return;
+        }
         LeanTween.cancel(panel);
         LeanTween.cancel(interactText.gameObject);
         LeanTween.scale(panel, new Vector2(1, 1), panel.localScale.y - 1).setEaseOutExpo().setOnComplete(ResetScale);
@@ -43,6 +47,10 @@ public class CanvasAnims : MonoBehaviour
 
     public void AnimateInteract()
     {
+        if (panel == null || interactText.gameObject == null)
+        {
+            return;
+        }
         LeanTween.cancel(panel);
         LeanTween.cancel(interactText.gameObject);
         SetInteractText("Interact : E");
@@ -52,6 +60,10 @@ public class CanvasAnims : MonoBehaviour
 
     public void AnimateEndInteract()
     {
+        if (panel == null || interactText.gameObject == null)
+        {
+            return;
+        }
         LeanTween.cancel(panel);
         LeanTween.cancel(interactText.gameObject);
         LeanTween.scale(panel, new Vector2(1f, 1f), panel.localScale.y - 1).setEaseOutExpo();
@@ -64,7 +76,12 @@ public class CanvasAnims : MonoBehaviour
 
     public void ResetScale()
     {
-        LeanTween.cancel(gameObject);
+        if (panel == null || interactText.gameObject == null)
+        {
+            return;
+        }
+        LeanTween.cancel(panel);
+        LeanTween.cancel(interactText.gameObject);
         SetInteractText("Interact : E");
         panel.localScale = new Vector3(1, 1, 1);
         interactText.GetComponent<CanvasGroup>().alpha = 0;
