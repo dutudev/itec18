@@ -19,6 +19,7 @@ public class Interactible : MonoBehaviour
     
     public void Interact()
     {
+        canInteract = false;
         switch (itemType)
         {
             case ItemType.WaterCan:
@@ -27,8 +28,6 @@ public class Interactible : MonoBehaviour
             case ItemType.Button:
                 //gaseste usa cu numele butonului si deschide
                 Destroy(GameObject.Find(gameObject.name + "door")); /// transform.rotation = Quaternion.Euler(0, 0, GameObject.Find(gameObject.name + "door").transform.rotation.eulerAngles.z - 90); ;
-                
-                canInteract = false;
                 //Destroy(GameObject.Find(gameObject.name + "door"));
                 break;
             case ItemType.Potion:
