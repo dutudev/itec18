@@ -40,6 +40,13 @@ public class Interactible : MonoBehaviour
                 break;
             case ItemType.Potion:
                 //creste sanitatea
+                var val = Random.RandomRange(15, 26);
+                if(GameManager.instance.getSanity() + val >= 100)
+                    GameManager.instance.setSanity(100);
+                else
+                    GameManager.instance.setSanity(GameManager.instance.getSanity() +  val);
+                CanvasAnims.instance.StartNotif("Picked up \"green tea\"");
+                Destroy(gameObject);
                 break;
             case ItemType.Flower:
                 //End menu smec cu pisisca si yippee

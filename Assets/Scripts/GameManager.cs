@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -88,9 +89,8 @@ public class GameManager : MonoBehaviour
             LeanTween.alphaCanvas(winMenu.GetComponent<CanvasGroup>(), 1, 1.5f).setEaseOutExpo();
             winCat.GetComponent<RectTransform>().localScale = Vector3.zero;
             LeanTween.delayedCall(1.5f, () => { winCat.SetActive(true); LeanTween.scale(winCat.GetComponent<RectTransform>(), new Vector3(2.8f, 2.8f, 2.8f), 2).setEaseOutElastic(); });
-            LeanTween.value(gameObject, 0, 1, 1.5f).setEaseOutExpo().setOnUpdate((value) =>
-            {
-                winSoundSource.volume = value;});
+            LeanTween.value(gameObject, 0, 1, 1.5f).setEaseOutExpo().setOnUpdate((value) => { winSoundSource.volume = value;});
+            LeanTween.delayedCall(8f, () => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); });
         }
     }
 
@@ -155,5 +155,14 @@ public class GameManager : MonoBehaviour
     public void UpdateSanityText()
     {
         sanityText.text = "Sanity : " + Mathf.FloorToInt(sanity) + "%";
+    }
+    public float getSanity()
+    {
+        return sanity;
+    }
+
+    public void setSanity(float x)
+    {
+        sanity = x;
     }
 }
