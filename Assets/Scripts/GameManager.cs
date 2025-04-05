@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private float sanity = 100, amplitude = 1;
+    [SerializeField] private float sanity = 100, amplitude = 1, sanitySpeed = 1;
     [SerializeField] private TMP_Text sanityText;
     [SerializeField] private PostProcessVolume ppProfile;
     [SerializeField] private bool drainSanity = true, hasBucket = false;
@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject winMenu, winCat;
     [SerializeField] private AudioClip winSound;
     [SerializeField] private AudioSource winSoundSource;
+
+    [SerializeField] private GameObject loseMenu;
+    
     public static GameManager instance { get; private set; }
     // Start is called before the first frame update
     void Start()
@@ -41,7 +44,14 @@ public class GameManager : MonoBehaviour
     {
         if (drainSanity)
         {
-            sanity -= Time.deltaTime * 0.6f;  
+            sanity -= Time.deltaTime * 0.6f * sanitySpeed;  
+        }
+
+        if (sanity <= 0)
+        {
+            drainSanity = false;
+            sanity = 0;
+            LoseGame();
         }
         
         UpdateSanityText();
@@ -82,7 +92,7 @@ public class GameManager : MonoBehaviour
             }
             drainSanity = false;
             winMenu.SetActive(true);
-            winCat.SetActive((false));
+            winCat.SetActive(false);
             winMenu.GetComponent<CanvasGroup>().alpha = 0;
             winMenu.GetComponent<CanvasGroup>().blocksRaycasts = true;
             winSoundSource.PlayOneShot(winSound);
@@ -92,6 +102,43 @@ public class GameManager : MonoBehaviour
             LeanTween.value(gameObject, 0, 1, 1.5f).setEaseOutExpo().setOnUpdate((value) => { winSoundSource.volume = value;});
             LeanTween.delayedCall(8f, () => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); });
         }
+    }
+
+    public PostProcessVolume GetPPVolume()
+    {
+        return ppProfile;
+    }
+
+    public void LoseGame()
+    {
+        ChromaticAberration chromatic;
+        if (ppProfile.profile.TryGetSettings(out chromatic))
+        {
+            chromatic.intensity.value =0;
+        }
+
+        Vignette vignette;
+        if (ppProfile.profile.TryGetSettings(out vignette))
+        {
+            vignette.intensity.value = 0;
+        }
+
+        Grain grain;
+        if (ppProfile.profile.TryGetSettings(out grain))
+        {
+            grain.intensity.value = 0;
+        }
+
+        LensDistortion lens;
+        if (ppProfile.profile.TryGetSettings(out lens))
+        {
+            lens.intensity.value = 0;
+        }
+        loseMenu.SetActive(true);
+        loseMenu.GetComponent<CanvasGroup>().alpha = 0;
+        loseMenu.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        LeanTween.alphaCanvas(loseMenu.GetComponent<CanvasGroup>(), 1, 1.5f).setEaseOutExpo();
+        LeanTween.delayedCall(4f, () => { SceneManager.LoadScene("Main Menu"); });
     }
 
     public bool CheckBucket()
@@ -154,7 +201,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateSanityText()
     {
-        sanityText.text = "Sanity : " + Mathf.FloorToInt(sanity) + "%";
+        sanityText.text = "Sanity : " + Mathf.Abs(Mathf.FloorToInt(sanity)) + "%";
     }
     public float getSanity()
     {

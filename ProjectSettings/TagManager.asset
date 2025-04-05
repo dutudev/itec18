@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactible
   - Decor
+  - hol
   layers:
   - Default
   - TransparentFX

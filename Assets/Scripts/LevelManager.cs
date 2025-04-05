@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private List<Item> items = new List<Item>();
     [SerializeField] private List<GameObject> Layouts = new List<GameObject>();
-
+    [SerializeField] private int currentLayout = -1;
     [SerializeField] private int EDITORLAYOUT, numberoflayouts;
     public static LevelManager instance { get; private set; }
 
@@ -16,19 +17,43 @@ public class LevelManager : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
-            instance = this;
+            print("notok");
+            Destroy(gameObject);
+            
         }
         else
         {
-            Destroy(gameObject);
+            instance = this;
+            print("ok");    
         }
     }
 
-    public void ChangeLayout(int layoutIndex)
+    private void Start()
     {
+        ChangeLayout();
+    }
+
+    public void ChangeLayout()
+    {
+        var nextLayout = Random.Range(0, Layouts.Count);
+        while (nextLayout == currentLayout)
+        {
+            nextLayout = Random.Range(0, Layouts.Count);
+        }
+
+        currentLayout = nextLayout;
+        foreach (var layout in Layouts)
+        {
+            layout.SetActive(false);
+        }
+        Layouts[currentLayout].SetActive(true);
         foreach (var itm in items)
         {
-            itm.item.transform.position = itm.layoutTransforms[layoutIndex];
+            if (itm.item != null)
+            {
+                itm.item.transform.position = itm.layoutTransforms[currentLayout]; 
+            }
+            
         }
     }
 

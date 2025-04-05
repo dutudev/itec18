@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
+using Random = UnityEngine.Random;
 
 public class Movement : MonoBehaviour
 {
@@ -9,14 +11,16 @@ public class Movement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private int moveSpeed;
-    [SerializeField] private bool canInteract;
+    [SerializeField] private float changeCooldown;
+    [SerializeField] private bool canInteract, canTeleport;
     [SerializeField] private Interactible interactibleScript = null;
-    [SerializeField] private BoxCollider2D interactCollider = null;
+    [SerializeField] private PostProcessVolume ppProfile;
+    //[SerializeField] private BoxCollider2D interactCollider = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ppProfile = GameManager.instance.GetPPVolume();
     }
 
     // Update is called once per frame
@@ -32,6 +36,11 @@ public class Movement : MonoBehaviour
         {
             interactibleScript.Interact();
         }
+/*
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            LevelManager.instance.ChangeLayout();
+        }*/
     }
 
     public void Move()
@@ -97,9 +106,51 @@ public class Movement : MonoBehaviour
                 canInteract = false;
                 CanvasAnims.instance.SetInteractText(interactibleScript.GetRestriction());
             }
+        }else if (other.CompareTag("hol"))
+        {
+            canTeleport = true;
+            var chance = Random.Range(1, 101);
+            var sanity = 0f;
+            if (GameManager.instance.getSanity() > 80)
+            {
+                sanity = 80f;
+            }
+            else
+            {
+                sanity = GameManager.instance.getSanity();
+            }
+            if (chance <= 50 + ((80 - sanity) / 80f) * 20)
+            {
+                if (canTeleport)
+                {
+                    LeanTween.delayedCall(Random.Range(.25f, .5f), () => {
+                        if (changeCooldown <= Time.time)
+                        {
+                            Vignette vignette;
+                            if (ppProfile.profile.TryGetSettings(out vignette))
+                            {
+                                LeanTween.value(gameObject, vignette.intensity.value, 1, 0.25f).setEaseOutExpo().setOnUpdate(
+                                    (value) =>
+                                    {
+                                        vignette.intensity.value = value;
+                                    });
+                                LeanTween.value(gameObject, 1, Mathf.Lerp(0, .5f, (80 - sanity) / 80f), 0.25f).setEaseOutExpo().setOnUpdate(
+                                    (value) =>
+                                    {
+                                        vignette.intensity.value = value;
+                                    }).setDelay(0.35f);
+                                
+                                
+                            }
+                            LevelManager.instance.ChangeLayout();
+                        }});
+                }
+                
+            }
         }
 
     }
+    
 
     public void OnTriggerExit2D(Collider2D other)
     {
@@ -108,6 +159,10 @@ public class Movement : MonoBehaviour
             canInteract = false;
             interactibleScript = null;
             CanvasAnims.instance.AnimateEndInteract();
+        }else if (other.CompareTag("hol"))
+        {
+            changeCooldown = Time.time + 1f;
+            canTeleport = false;
         }
     }
 }

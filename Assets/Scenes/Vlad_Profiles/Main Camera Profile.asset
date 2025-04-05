@@ -142,7 +142,7 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   mode:
-    overrideState: 0
+    overrideState: 1
     value: 0
   color:
     overrideState: 0
@@ -155,7 +155,7 @@ MonoBehaviour:
     value: 0
   smoothness:
     overrideState: 1
-    value: 0.614
+    value: 0.6
   roundness:
     overrideState: 1
     value: 1
