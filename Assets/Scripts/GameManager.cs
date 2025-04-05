@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
 
         mesh.vertices = vertices;
         sanityText.canvasRenderer.SetMesh(mesh);
-        
+        //add pp
     }
 
     public void UpdateSanityText()

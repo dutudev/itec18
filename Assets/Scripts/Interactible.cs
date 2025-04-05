@@ -7,6 +7,7 @@ public class Interactible : MonoBehaviour
     [SerializeField] private bool canInteract = true;
     [SerializeField] private string interactionRestriction;
     [SerializeField] private ItemType itemType;
+    [SerializeField] private BoxCollider2D triggerCollider;
 
     public enum ItemType
     {
@@ -19,15 +20,19 @@ public class Interactible : MonoBehaviour
     
     public void Interact()
     {
+        Destroy(triggerCollider);
+        triggerCollider = null;
         canInteract = false;
         switch (itemType)
         {
             case ItemType.WaterCan:
                 //distruge item si arata ca ai watercan
+                Destroy(gameObject);
+                GameObject.Find("floare").GetComponent<Interactible>().canInteract = true;
                 break;
             case ItemType.Button:
                 //gaseste usa cu numele butonului si deschide
-                Destroy(GameObject.Find(gameObject.name + "door")); /// transform.rotation = Quaternion.Euler(0, 0, GameObject.Find(gameObject.name + "door").transform.rotation.eulerAngles.z - 90); ;
+                Destroy(GameObject.Find(gameObject.name + "door"));
                 //Destroy(GameObject.Find(gameObject.name + "door"));
                 break;
             case ItemType.Potion:

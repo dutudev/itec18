@@ -156,6 +156,54 @@ Transform:
   - {fileID: 854364219}
   m_Father: {fileID: 1788172585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &165654007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 165654009}
+  - component: {fileID: 165654008}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &165654008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165654007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91bbc1f93e411294989f987a1de982fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sanity: 100
+  amplitude: 1
+  sanityText: {fileID: 1597342612}
+  ppProfile: {fileID: 11400000, guid: c6da14e19ab5ede47baf8f28263ede66, type: 2}
+--- !u!4 &165654009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165654007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &205889824
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +288,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 2132755898}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -266,6 +314,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 934519749}
+  - {fileID: 1489072319}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9014,8 +9063,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1062938684}
   - component: {fileID: 1062938683}
-  - component: {fileID: 1062938682}
   - component: {fileID: 1062938681}
+  - component: {fileID: 1062938682}
   - component: {fileID: 1062938680}
   m_Layer: 0
   m_Name: red
@@ -9039,6 +9088,7 @@ MonoBehaviour:
   canInteract: 1
   interactionRestriction: 
   itemType: 1
+  triggerCollider: {fileID: 1062938682}
 --- !u!61 &1062938681
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9409,6 +9459,41 @@ Transform:
   - {fileID: 1786088424}
   m_Father: {fileID: 1788172585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1489072318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1489072319}
+  m_Layer: 5
+  m_Name: NotifMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1489072319
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489072318}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 205889829}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -540}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1500547069
 GameObject:
   m_ObjectHideFlags: 0
@@ -14641,6 +14726,7 @@ MonoBehaviour:
   canInteract: 1
   interactionRestriction: 
   itemType: 2
+  triggerCollider: {fileID: 9066182170355164545}
 --- !u!61 &3908578641473511215
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14788,6 +14874,7 @@ MonoBehaviour:
   canInteract: 1
   interactionRestriction: 
   itemType: 0
+  triggerCollider: {fileID: 2131056094273149197}
 --- !u!1 &6536687366742899557
 GameObject:
   m_ObjectHideFlags: 0
@@ -14964,7 +15051,7 @@ GameObject:
   - component: {fileID: 3908578641473511215}
   - component: {fileID: 9143348938120998740}
   m_Layer: 0
-  m_Name: floare ofilita
+  m_Name: floare
   m_TagString: Interactible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15030,6 +15117,7 @@ MonoBehaviour:
   canInteract: 0
   interactionRestriction: Needs watering can
   itemType: 3
+  triggerCollider: {fileID: 3908578641473511215}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -15038,11 +15126,12 @@ SceneRoots:
   - {fileID: 811261933}
   - {fileID: 2132755899}
   - {fileID: 1788172585}
-  - {fileID: 1062938684}
-  - {fileID: 634822556490711747}
-  - {fileID: 1787684134}
-  - {fileID: 258212891}
   - {fileID: 205889829}
+  - {fileID: 258212891}
   - {fileID: 458921175}
+  - {fileID: 165654009}
   - {fileID: 2549688758012789985}
   - {fileID: 4837100155075442797}
+  - {fileID: 634822556490711747}
+  - {fileID: 1062938684}
+  - {fileID: 1787684134}
