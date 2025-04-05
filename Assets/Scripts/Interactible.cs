@@ -5,31 +5,35 @@ using UnityEngine;
 public class Interactible : MonoBehaviour
 {
     [SerializeField] private bool canInteract = true;
-
     [SerializeField] private string interactionRestriction;
+    [SerializeField] private ItemType itemType;
 
     public enum ItemType
     {
-        waterCan,
-        button,
-        potion,
-        flower,
+        WaterCan,
+        Button,
+        Potion,
+        Flower,
     };
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
+    
     public void Interact()
     {
-        
+        switch (itemType)
+        {
+            case ItemType.WaterCan:
+                //distruge item si arata ca ai watercan
+                break;
+            case ItemType.Button:
+                //gaseste usa cu numele butonului si deschide
+                break;
+            case ItemType.Potion:
+                //creste sanitatea
+                break;
+            case ItemType.Flower:
+                //End menu smec cu pisisca si yippee
+                break;
+        }
     }
 
     public bool CanInteract()
