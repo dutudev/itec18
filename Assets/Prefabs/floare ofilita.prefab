@@ -191,4 +191,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canInteract: 0
   interactionRestriction: Needs watering can
-  itemType: 0
+  itemType: 3
