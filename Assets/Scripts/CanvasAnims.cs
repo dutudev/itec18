@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CanvasAnims : MonoBehaviour
 {
     [SerializeField] private TMP_Text interactText;
     
-    [SerializeField] private RectTransform panel;
-    
+    [SerializeField] private RectTransform panel, notifPanel;
+    [SerializeField] private GameObject notifPrefab;
     public static CanvasAnims instance { get; private set; }
     // Start is called before the first frame update
     void Awake()
@@ -31,6 +32,16 @@ public class CanvasAnims : MonoBehaviour
     public void SetInteractText(string input)
     {
         interactText.text = input;
+    }
+
+    public void StartNotif(string input)
+    {
+        var notifpanel = Instantiate(notifPrefab, new Vector3(0, 150, 0), quaternion.identity, notifPanel);
+        var notifText = notifpanel.GetComponentInChildren<TMP_Text>();
+        notifText.text = input;
+        Destroy(notifpanel, 5);
+        LeanTween.move(notifpanel.GetComponent<RectTransform>(), new Vector3(0, -100, 0), 1).setEaseOutExpo();
+        LeanTween.move(notifpanel.GetComponent<RectTransform>(), new Vector3(0, 150, 0), 1).setEaseOutExpo().setDelay(4f);
     }
 
     public void ResetToOriginBottom()

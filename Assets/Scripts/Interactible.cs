@@ -28,10 +28,12 @@ public class Interactible : MonoBehaviour
             case ItemType.WaterCan:
                 //distruge item si arata ca ai watercan
                 Destroy(gameObject);
+                CanvasAnims.instance.StartNotif("Picked up water can");
                 GameObject.Find("floare").GetComponent<Interactible>().canInteract = true;
                 break;
             case ItemType.Button:
                 //gaseste usa cu numele butonului si deschide
+                CanvasAnims.instance.StartNotif("Opened " + gameObject.name + " door");
                 Destroy(GameObject.Find(gameObject.name + "door"));
                 //Destroy(GameObject.Find(gameObject.name + "door"));
                 break;

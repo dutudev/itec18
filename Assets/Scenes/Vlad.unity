@@ -2978,30 +2978,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items:
-  - item: {fileID: 1138048209}
-    layoutTransforms:
-    - {x: -9.03, y: 0.76, z: 0}
-    - {x: -11, y: 4.15, z: 0}
-    - {x: -11, y: 7.9, z: 0}
-  - item: {fileID: 1587779818}
-    layoutTransforms:
-    - {x: 7.94, y: -8.18, z: 0}
-    - {x: 3.9, y: -6.3, z: 0}
-    - {x: 5, y: 6.9, z: 0}
   - item: {fileID: 41305474}
     layoutTransforms:
-    - {x: 2.95, y: 8.93, z: 0}
-    - {x: -8.24, y: -0.15, z: 0}
-    - {x: 5, y: -6, z: 0}
+    - {x: 5.14, y: -6.06, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
   - item: {fileID: 812430082}
     layoutTransforms:
-    - {x: -9.2, y: -7.36, z: 0}
-    - {x: 7, y: 7.8, z: 0}
-    - {x: -4.2, y: -7, z: 0}
+    - {x: -4.18, y: -6.92, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+  - item: {fileID: 1138048209}
+    layoutTransforms:
+    - {x: -11.01, y: 7.95, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+  - item: {fileID: 1587779818}
+    layoutTransforms:
+    - {x: 4.93, y: 6.88, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
   Layouts:
   - {fileID: 862236836}
   - {fileID: 1281762042}
   - {fileID: 1022193907}
+  EDITORLAYOUT: 0
+  numberoflayouts: 3
 --- !u!4 &513517265
 Transform:
   m_ObjectHideFlags: 0
@@ -5342,7 +5344,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -540}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &862236836
@@ -7993,6 +7995,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactText: {fileID: 246777725}
   panel: {fileID: 1495839398}
+  notifPanel: {fileID: 819914580}
+  notifPrefab: {fileID: 7314225738103543003, guid: a5e26a800e6b66542a6312daa999241b, type: 3}
 --- !u!114 &1499423105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15130,8 +15134,8 @@ SceneRoots:
   - {fileID: 647746620}
   - {fileID: 812430087}
   - {fileID: 66123539}
-  - {fileID: 513517265}
   - {fileID: 1733462831}
   - {fileID: 2071176059}
+  - {fileID: 513517265}
   - {fileID: 1499423103}
   - {fileID: 427411065}
