@@ -28,6 +28,7 @@ public class Interactible : MonoBehaviour
             case ItemType.WaterCan:
                 //distruge item si arata ca ai watercan
                 Destroy(gameObject);
+                GameManager.instance.HaveBucket();
                 CanvasAnims.instance.StartNotif("Picked up water can");
                 GameObject.Find("floare").GetComponent<Interactible>().canInteract = true;
                 break;
@@ -42,6 +43,10 @@ public class Interactible : MonoBehaviour
                 break;
             case ItemType.Flower:
                 //End menu smec cu pisisca si yippee
+                if (GameManager.instance.CheckBucket())
+                {
+                    GameManager.instance.WinGame();
+                }
                 break;
         }
     }
