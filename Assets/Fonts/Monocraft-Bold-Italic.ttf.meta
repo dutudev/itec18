@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 98dd726f1ef5d1f48969e04e41bed47e
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Monocraft
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: b17ff515327ce8349bf54fdf2c3659ca, type: 3}
+  - {fileID: 12800000, guid: 471b3c199c0707e4d8c4dba186c1744e, type: 3}
+  - {fileID: 12800000, guid: 95da9134b0bc4054d81634fd6097bc20, type: 3}
+  - {fileID: 12800000, guid: 78fe847f1d6ba9d40bd5dd05b2d59464, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

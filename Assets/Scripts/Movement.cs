@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private int moveSpeed;
+    [SerializeField] private Interactible interactibleScript = null;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,7 @@ public class Movement : MonoBehaviour
     {
         Vector2 moveAxis = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         moveAxis.Normalize();
-        print(moveAxis.y);
+        //print(moveAxis.y);
         if (moveAxis == Vector2.zero)
         {
             animator.SetBool("Return", true);
@@ -66,5 +67,26 @@ public class Movement : MonoBehaviour
 
         
         rb.velocity = moveAxis * moveSpeed;
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Interactible"))
+        {
+            CanvasAnims.instance.AnimateInteract();
+            interactibleScript = other.GetComponent<Interactible>();
+            if (!interactibleScript.CanInteract())
+            {
+                CanvasAnims.instance.SetInteractText(interactibleScript.GetRestriction());
+            }
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Interactible"))
+        {
+            CanvasAnims.instance.AnimateEndInteract();
+        }
     }
 }
