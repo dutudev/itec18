@@ -3,15 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering.Universal;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private float sanity = 100, amplitude = 1, sanitySpeed = 1;
     [SerializeField] private TMP_Text sanityText;
-    [SerializeField] private PostProcessVolume ppProfile;
+    //[SerializeField] private PostProcessVolume ppProfile;
+    
+    [SerializeField] private Volume volume;
+    private ChromaticAberration chromatic;
+    private Vignette vignette;
+    private FilmGrain grain;
+    private LensDistortion lens;
     [SerializeField] private bool drainSanity = true, hasBucket = false, animateVig = true;
 
     [SerializeField] private GameObject winMenu, winCat;
@@ -24,7 +31,23 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (volume.profile.TryGet<Vignette>(out var vign))
+        {
+            vignette = vign;
+        }
+        if (volume.profile.TryGet<LensDistortion>(out var lensDis))
+        {
+            lens = lensDis;
+        }
+        if (volume.profile.TryGet<FilmGrain>(out var fg))
+        {
+            grain = fg;
+        }
+
+        if (volume.profile.TryGet<ChromaticAberration>(out var ctx))
+        {
+            chromatic = ctx;
+        }
     }
 
     private void Awake()
@@ -72,29 +95,11 @@ public class GameManager : MonoBehaviour
     {
         if (hasBucket)
         {
-            ChromaticAberration chromatic;
-            if (ppProfile.profile.TryGetSettings(out chromatic))
-            {
-                chromatic.intensity.value =0;
-            }
-
-            Vignette vignette;
-            if (ppProfile.profile.TryGetSettings(out vignette))
-            {
-                vignette.intensity.value = 0;
-            }
-
-            Grain grain;
-            if (ppProfile.profile.TryGetSettings(out grain))
-            {
-                grain.intensity.value = 0;
-            }
-
-            LensDistortion lens;
-            if (ppProfile.profile.TryGetSettings(out lens))
-            {
-                lens.intensity.value = 0;
-            }
+            chromatic.intensity.value =0;
+            vignette.intensity.value = 0;
+            grain.intensity.value = 0;
+            lens.intensity.value = 0;
+            
             drainSanity = false;
             winMenu.SetActive(true);
             winCat.SetActive(false);
@@ -109,36 +114,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public PostProcessVolume GetPPVolume()
+    public Volume GetPPVolume()
     {
-        return ppProfile;
+        return volume;
     }
 
     public void LoseGame()
     {
-        ChromaticAberration chromatic;
-        if (ppProfile.profile.TryGetSettings(out chromatic))
-        {
-            chromatic.intensity.value =0;
-        }
-
-        Vignette vignette;
-        if (ppProfile.profile.TryGetSettings(out vignette))
-        {
-            vignette.intensity.value = 0;
-        }
-
-        Grain grain;
-        if (ppProfile.profile.TryGetSettings(out grain))
-        {
-            grain.intensity.value = 0;
-        }
-
-        LensDistortion lens;
-        if (ppProfile.profile.TryGetSettings(out lens))
-        {
-            lens.intensity.value = 0;
-        }
+        chromatic.intensity.value =0;
+        vignette.intensity.value = 0;
+        grain.intensity.value = 0;
+        lens.intensity.value = 0;
         loseMenu.SetActive(true);
         loseMenu.GetComponent<CanvasGroup>().alpha = 0;
         loseMenu.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -176,32 +162,36 @@ public class GameManager : MonoBehaviour
         if (sanity <= 80 && drainSanity)
         {
             amplitude = Mathf.Lerp(1, 20, (80 - sanity) / 80f);
+            /*
             ChromaticAberration chromatic;
             if (ppProfile.profile.TryGetSettings(out chromatic))
             {
-                chromatic.intensity.value = Mathf.Lerp(0, .5f, (80 - sanity) / 80f);
-            }
-
+                
+            }*/
+            chromatic.intensity.value = Mathf.Lerp(0, .5f, (80 - sanity) / 80f);
             if (animateVig)
             {
+                /*
                 Vignette vignette;
                 if (ppProfile.profile.TryGetSettings(out vignette))
-                {
-                    vignette.intensity.value = Mathf.Lerp(0, .5f, (80 - sanity) / 80f);
-                }
+                { 
+                }*/
+                vignette.intensity.value = Mathf.Lerp(0, .5f, (80 - sanity) / 80f);
             }
-
+            grain.intensity.value = Mathf.Lerp(0, 1, (80 - sanity) / 80f);
+            /*
             Grain grain;
             if (ppProfile.profile.TryGetSettings(out grain))
             {
-                grain.intensity.value = Mathf.Lerp(0, 1, (80 - sanity) / 80f);
-            }
-
+                
+            }*/
+            lens.intensity.value = Mathf.Lerp(0, -0.25f, (80 - sanity) / 80f);
+            /*
             LensDistortion lens;
             if (ppProfile.profile.TryGetSettings(out lens))
             {
-                lens.intensity.value = Mathf.Lerp(0, -30, (80 - sanity) / 80f);
-            }
+                
+            }*/
         }
         
         

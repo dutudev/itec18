@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
 
 public class Movement : MonoBehaviour
@@ -14,13 +15,18 @@ public class Movement : MonoBehaviour
     [SerializeField] private float changeCooldown;
     [SerializeField] private bool canInteract, canTeleport;
     [SerializeField] private Interactible interactibleScript = null;
-    [SerializeField] private PostProcessVolume ppProfile;
+    [SerializeField] private Volume ppProfile;
+    [SerializeField] private Vignette vignette;
     //[SerializeField] private BoxCollider2D interactCollider = null;
 
     // Start is called before the first frame update
     void Start()
     {
         ppProfile = GameManager.instance.GetPPVolume();
+        if (ppProfile.profile.TryGet<Vignette>(out var vig))
+        {
+            vignette = vig;
+        }
     }
 
     // Update is called once per frame
@@ -128,9 +134,6 @@ public class Movement : MonoBehaviour
                         if (changeCooldown <= Time.time)
                         {
                             GameManager.instance.VigAnim(false);
-                            Vignette vignette;
-                            if (ppProfile.profile.TryGetSettings(out vignette))
-                            {
                                 LeanTween.value(gameObject, vignette.intensity.value, 1, 0.25f).setEaseOutExpo().setOnUpdate(
                                     (value) =>
                                     {
@@ -143,11 +146,6 @@ public class Movement : MonoBehaviour
                                             vignette.intensity.value = value;
                                         }).setOnComplete(()=>{GameManager.instance.VigAnim(true);});
                                 });
-                                
-                                
-                                
-                            }
-                            
                             LevelManager.instance.ChangeLayout();
                         }});
                 }
