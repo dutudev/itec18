@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: d1ca80ebb85cefe4e8af7f5af2cc0c8b
   - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 1b90e259f90931d4ba6c17fca2e72f6a
+  - enabled: 1
     path: Assets/Scenes/Level_1.unity
     guid: 9e330147fddbf4b438b74b34d442c3cf
   - enabled: 1
