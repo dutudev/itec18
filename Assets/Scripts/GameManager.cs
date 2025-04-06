@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float sanity = 100, amplitude = 1, sanitySpeed = 1;
     [SerializeField] private TMP_Text sanityText;
     [SerializeField] private PostProcessVolume ppProfile;
-    [SerializeField] private bool drainSanity = true, hasBucket = false;
+    [SerializeField] private bool drainSanity = true, hasBucket = false, animateVig = true;
 
     [SerializeField] private GameObject winMenu, winCat;
     [SerializeField] private AudioClip winSound;
@@ -37,6 +37,11 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+    public void VigAnim(bool set)
+    {
+        animateVig = set;
     }
 
     // Update is called once per frame
@@ -177,10 +182,13 @@ public class GameManager : MonoBehaviour
                 chromatic.intensity.value = Mathf.Lerp(0, .5f, (80 - sanity) / 80f);
             }
 
-            Vignette vignette;
-            if (ppProfile.profile.TryGetSettings(out vignette))
+            if (animateVig)
             {
-                vignette.intensity.value = Mathf.Lerp(0, .5f, (80 - sanity) / 80f);
+                Vignette vignette;
+                if (ppProfile.profile.TryGetSettings(out vignette))
+                {
+                    vignette.intensity.value = Mathf.Lerp(0, .5f, (80 - sanity) / 80f);
+                }
             }
 
             Grain grain;

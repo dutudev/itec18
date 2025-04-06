@@ -108,6 +108,7 @@ public class Movement : MonoBehaviour
             }
         }else if (other.CompareTag("hol"))
         {
+            print("Entered trigger");
             canTeleport = true;
             var chance = Random.Range(1, 101);
             var sanity = 0f;
@@ -126,6 +127,7 @@ public class Movement : MonoBehaviour
                     LeanTween.delayedCall(Random.Range(.25f, .5f), () => {
                         if (changeCooldown <= Time.time)
                         {
+                            GameManager.instance.VigAnim(false);
                             Vignette vignette;
                             if (ppProfile.profile.TryGetSettings(out vignette))
                             {
@@ -133,15 +135,19 @@ public class Movement : MonoBehaviour
                                     (value) =>
                                     {
                                         vignette.intensity.value = value;
-                                    });
-                                LeanTween.value(gameObject, 1, Mathf.Lerp(0, .5f, (80 - sanity) / 80f), 0.25f).setEaseOutExpo().setOnUpdate(
-                                    (value) =>
-                                    {
-                                        vignette.intensity.value = value;
-                                    }).setDelay(0.35f);
+                                    }).setOnComplete(() =>
+                                {
+                                    LeanTween.value(gameObject, 1, Mathf.Lerp(0, .5f, (80 - sanity) / 80f), 0.25f).setEaseOutExpo().setOnUpdate(
+                                        (value) =>
+                                        {
+                                            vignette.intensity.value = value;
+                                        }).setOnComplete(()=>{GameManager.instance.VigAnim(true);});
+                                });
+                                
                                 
                                 
                             }
+                            
                             LevelManager.instance.ChangeLayout();
                         }});
                 }
@@ -161,8 +167,17 @@ public class Movement : MonoBehaviour
             CanvasAnims.instance.AnimateEndInteract();
         }else if (other.CompareTag("hol"))
         {
+            print("Exit trigger");
             changeCooldown = Time.time + 1f;
             canTeleport = false;
         }
     }
+    /*
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("hol"))
+        {
+            Debug.Log("Still inside hol trigger");
+        }
+    }*/
 }
