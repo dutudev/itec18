@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         if (sanity <= 0)
         {
             drainSanity = false;
-            sanity = 0;
+            sanity = 1;
             LoseGame();
         }
         
